@@ -1,6 +1,7 @@
 <?php 
 
 
+session_start();
 
 $nom = $_SESSION['nom'] ?? "";
 $motDePasse = $_SESSION['motDePasse'] ?? "";
@@ -51,6 +52,54 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <link rel="stylesheet" href="style.css">
 </head>
 
+
+<body>
+
+    <?php require_once 'header.php'; ?>
+    <main>
+        
+        <input type="hidden" name="role" id="roleInput" value="<?= htmlspecialchars($_POST['role'] ?? 'etudiant') ?>">
+
+        <div class="switch-role-container">
+            <button type="button" 
+                    class="switch-btn <?= (($_POST['role'] ?? 'etudiant') === 'etudiant') ? 'active' : '' ?>" 
+                    id="btn-etudiant" 
+                    onclick="setRole('etudiant')">
+                Étudiants
+            </button>
+            <button type="button" 
+                    class="switch-btn <?= (($_POST['role'] ?? '') === 'employes') ? 'active' : '' ?>" 
+                    id="btn-employes" 
+                    onclick="setRole('employes')">
+                Employés
+            </button>
+        </div>
+        </div>
+        <form action="" method="post" id="loginForm">
+            <div>
+                <label for="nom">Nom d'utilisateur : </label>
+                <input type="text" name="nom" id="nom" value="<?= htmlspecialchars($nom); ?>"
+                class="<?= isset($erreurs['nom']) ? 'input-erreur' : '' ?>">
+                    <?php if(isset($erreurs['nom'])): ?>
+                        <p class="erreur"><?= htmlspecialchars($erreurs['nom']) ?></p>
+                    <?php endif; ?> 
+            </div>
+
+            <div>
+
+                <label for="motDePasse">Mot de passe : </label>
+                <input type="password" name="motDePasse" id="motDePasse" value="<?= htmlspecialchars($motDePasse); ?>"
+                class="<?= isset($erreurs['motDePasse']) ? 'input-erreur' : '' ?>">
+                    <?php if(isset($erreurs['motDePasse'])): ?>
+                        <p class="erreur"><?= htmlspecialchars($erreurs['motDePasse']) ?></p>
+                    <?php endif; ?>
+            </div>
+
+            <button type="submit">Se connecter</button>
+        </form>
+    </main>
+</body>
+</html>
 <script>
     function setRole(role){
         const inputRole = document.getElementById('roleInput');
@@ -92,50 +141,3 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         }
     });
 </script>
-<body>
-
-    <?php require_once 'header.php'; ?>
-    <main>
-        
-        <input type="hidden" name="role" id="roleInput" value="<?= htmlspecialchars($_POST['role'] ?? 'etudiant') ?>">
-
-        <div class="switch-role-container">
-            <button type="button" 
-                    class="switch-btn <?= (($_POST['role'] ?? 'etudiant') === 'etudiant') ? 'active' : '' ?>" 
-                    id="btn-etudiant" 
-                    onclick="setRole('etudiant')">
-                Étudiants
-            </button>
-            <button type="button" 
-                    class="switch-btn <?= (($_POST['role'] ?? '') === 'employes') ? 'active' : '' ?>" 
-                    id="btn-employes" 
-                    onclick="setRole('employes')">
-                Employés
-            </button>
-        </div>
-        </div>
-        <form action="" method="post">
-            <div>
-                <label for="nom">Nom d'utilisateur : </label>
-                <input type="text" name="nom" id="nom" value="<?= htmlspecialchars($nom); ?>"
-                class="<?= isset($erreurs['nom']) ? 'input-erreur' : '' ?>">
-                    <?php if(isset($erreurs['nom'])): ?>
-                        <p class="erreur"><?= htmlspecialchars($erreurs['nom']) ?></p>
-                    <?php endif; ?> 
-            </div>
-
-            <div>
-
-                <label for="motDePasse">Mot de passe : </label>
-                <input type="password" name="motDePasse" id="motDePasse" value="<?= htmlspecialchars($motDePasse); ?>"
-                class="<?= isset($erreurs['motDePasse']) ? 'input-erreur' : '' ?>">
-                    <?php if(isset($erreurs['motDePasse'])): ?>
-                        <p class="erreur"><?= htmlspecialchars($erreurs['motDePasse']) ?></p>
-                    <?php endif; ?>
-            </div>
-
-            <button type="submit">Se connecter</button>
-        </form>
-    </main>
-</body>
-</html>
