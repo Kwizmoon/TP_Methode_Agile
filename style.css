@@ -5,6 +5,7 @@
 }
 
 body {
+    background-image: url('Images/blue-wallpaper.jpg');
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f6f9;
     display: flex;
@@ -102,4 +103,41 @@ header,
     color: inherit;
     display: block;
     font-size: xx-large;
+}
+
+/* Conteneur principal du switch */
+.switch-role-container {
+    display: flex;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 1.5rem auto;
+    border: 2px solid #3b82f6;
+    border-radius: 25px; /* Bords très arrondis */
+    overflow: hidden; /* Conserve les arrondis sur les boutons enfants */
+    background-color: #ffffff;
+}
+
+/* Boutons de commutation */
+.switch-btn {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    border: none;
+    background-color: transparent;
+    color: #3b82f6;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+}
+
+/* État actif (Onglet sélectionné) */
+.switch-btn.active {
+    background-color: #3b82f6; /* Orange plein */
+    color: #ffffff; /* Texte blanc */
+}
+
+/* Effet survol si non actif */
+.switch-btn:not(.active):hover {
+    background-color: rgba(217, 107, 39, 0.08);
 }
