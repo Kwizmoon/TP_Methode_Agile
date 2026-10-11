@@ -5,13 +5,13 @@ session_start();
 
 $nom = $_SESSION['nom'] ?? "";
 $motDePasse = $_SESSION['motDePasse'] ?? "";
-$role = $_POST['role'] ?? 'etudiant';
+$role = $_POST['role'] ?? 'enseignant';
 $erreurs = [];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $nom = trim($_POST['nom'] ?? "");
     $motDePasse = trim($_POST['motDePasse'] ?? "");
-    $role = $_POST['role'] ?? 'etudiant';
+    $role = $_POST['role'] ?? 'enseignant';
 
     // Validation du nom d'utilisateur
     if($nom === ""){
@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $_SESSION['nom'] = $nom;
         $_SESSION['role'] = $role;
 
-        if($role === 'etudiant'){
+        if($role === 'enseignant'){
             header('Location: Dashboard.php');
             exit();
         }else{
@@ -58,20 +58,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <?php require_once 'header.php'; ?>
     <main>
         
-        <input type="hidden" name="role" id="roleInput" value="<?= htmlspecialchars($_POST['role'] ?? 'etudiant') ?>">
+        <input type="hidden" name="role" id="roleInput" value="<?= htmlspecialchars($_POST['role'] ?? 'enseignant') ?>">
 
         <div class="switch-role-container">
             <button type="button" 
-                    class="switch-btn <?= (($_POST['role'] ?? 'etudiant') === 'etudiant') ? 'active' : '' ?>" 
+                    class="switch-btn <?= (($_POST['role'] ?? 'enseignant') === 'enseignant') ? 'active' : '' ?>" 
+                    id="btn-enseignant" 
+                    onclick="setRole('enseignant')">
+                Enseignants
+            </button>
+            <button type="button" 
+                    class="switch-btn <?= (($_POST['role'] ?? '') === 'etudiant') ? 'active' : '' ?>" 
                     id="btn-etudiant" 
                     onclick="setRole('etudiant')">
                 Étudiants
-            </button>
-            <button type="button" 
-                    class="switch-btn <?= (($_POST['role'] ?? '') === 'employes') ? 'active' : '' ?>" 
-                    id="btn-employes" 
-                    onclick="setRole('employes')">
-                Employés
             </button>
         </div>
         </div>
@@ -104,16 +104,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     function setRole(role){
         const inputRole = document.getElementById('roleInput');
         const btnEtudiant = document.getElementById('btn-etudiant');
-        const btnEmployes = document.getElementById('btn-employes');
+        const btnEnseignant = document.getElementById('btn-enseignant');
 
         inputRole.value = role;
 
-        if(role === 'etudiant'){
-            btnEtudiant.classList.add('active');
-            btnEmployes.classList.remove('active');
-        }else{
-            btnEmployes.classList.add('active');
+        if(role === 'enseignant'){
+            btnEnseignant.classList.add('active');
             btnEtudiant.classList.remove('active');
+        }else{
+            btnEtudiant.classList.add('active');
+            btnEnseignant.classList.remove('active');
         }
     }
 
@@ -136,8 +136,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         if(result.success){
             window.location.href = result.redirect;
-        }else{
-            alert(result.message);
         }
     });
 </script>
