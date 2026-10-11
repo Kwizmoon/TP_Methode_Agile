@@ -8,10 +8,8 @@
 </head>
 <body>
     <header class="main-header">
-        <a href="accueil.php" class="logo">MOON</a>
+        <a href="accueil.php" class="logo">KWIZ</a>
            
-
-
     </header>
 </body>
 </html>
