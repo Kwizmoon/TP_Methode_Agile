@@ -45,7 +45,7 @@ session_start();
     </div>
 
     <div class="logout-section">
-        <button class="logout-btn">
+        <button class="logout-btn" onclick="window.location.href='accueil.php'">
             Déconnexion
         </button>
     </div>
