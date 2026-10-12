@@ -32,7 +32,7 @@
                 Étudiants
             </button>
         </div>
-        </div>
+        
         <form action="" method="post" id="loginForm">
             <div>
                 <label for="nom">Nom d'utilisateur : </label>
@@ -85,7 +85,7 @@
             role: document.getElementById('roleInput').value
         };
         try {
-            const response = await fetch('api/connexion.php', {
+            const response = await fetch('../api/connexion.php', {
             method : 'POST',
             headers : {'Content-Type' : 'application/json'},
             body: JSON.stringify(data)
