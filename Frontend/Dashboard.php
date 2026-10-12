@@ -13,9 +13,7 @@ session_start();
 
 <body>
 
-<header class="main-header">
-    Dashboard.phpKwizmoon</a>
-</header>
+<?php require_once 'header.php'; ?>
 
 <div class="dashboard">
 
