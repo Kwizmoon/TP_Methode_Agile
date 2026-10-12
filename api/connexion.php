@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require __DIR__ . '/../config/Database.php';
 
 // Definit le format de reponse (format JSON)
 header("Content-Type: application/json; charset=utf-8");
@@ -19,16 +20,40 @@ $nom = trim($data['nom'] ?? "");
 $motDePasse = trim($data['motDePasse'] ?? "");
 $role = $data['role'] ?? 'enseignant';
 $erreurs = [];
+$champsValides = true;
 
 // Validation du nom d'utilisateur
 if($nom === ""){
     $erreurs["nom"] = "Le nom est obligatoire";
+    $champsValides = false;
 }
 
 // Validation du mot de passe
 if($motDePasse === ""){
     $erreurs["motDePasse"] = "Le mot de passe est obligatoire";
+    $champsValides = false;
 }
+
+// Validation du user/motDePasse dans la BD, Limit de 1 user recuperer
+$userExist = $pdo->prepare(
+    'SELECT 1 FROM users
+    WHERE nom = :nom
+    AND mot_de_passe = :motDePasse
+    AND role = :role
+    LIMIT 1   
+    '
+);
+$userExist->execute([
+    'nom' => $nom,
+    'motDePasse' => $motDePasse,
+    'role' => $role
+]);
+
+// fetchColumn check si un row a etait trouver et retourn 1 ou 0, pour checker si un user a ete trouver
+if ($userExist->fetchColumn() == false && $champsValides == true){
+    $erreurs["bd"] = "L'utilisateur n'existe pas.";
+}
+
 
 // Enregistre a la session et redirige le URL si ya pas d'erreurs
 if(empty($erreurs)){
