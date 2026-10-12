@@ -42,13 +42,13 @@
             </div>
 
             <div>
-
                 <label for="motDePasse">Mot de passe : </label>
                 <input type="password" name="motDePasse" id="motDePasse">
                 <p class="erreur" id="erreur-motDePasse"></p>
             </div>
 
             <button type="submit">Se connecter</button>
+            <p class="erreur" id="erreur-bd"></p>
         </form>
     </main>
 </body>
@@ -106,6 +106,9 @@
                 if (result.erreurs.motDePasse) {
                     document.getElementById('erreur-motDePasse').textContent = result.erreurs.motDePasse;
                     document.getElementById('motDePasse').classList.add('input-erreur');
+                }
+                if (result.erreurs.bd) {
+                    document.getElementById('erreur-bd').textContent = result.erreurs.bd;
                 }
 
             }
