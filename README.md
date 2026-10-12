@@ -16,16 +16,16 @@ Développer une application permettant à un enseignant de se connecter de mani�
 
 | Tâche                                                 | Outils utilisés |
 | ----------------------------------------------------- | --------------- |
-| Définir l'architecture du projet                      |                 |
-| Créer la base de données et la table des utilisateurs |                 |
-| Créer la page de connexion                            |                 |
-| Valider les champs du formulaire                      |                 |
-| Développer l'API de connexion                         |                 |
-| Implémenter l'authentification côté serveur           |                 |
-| Gérer le token d'authentification                     |                 |
-| Créer le tableau de bord                              |                 |
-| Tester la connexion et les accès protégés             |                 |
-| Documenter le projet                                  |                 |
+| Définir l'architecture du projet                      |   diagram UML   |
+| Créer la base de données et la table des utilisateurs |   PHP - Sqlite  |
+| Créer la page de connexion                            |   HTML-CSS-JS   |
+| Valider les champs du formulaire                      |   PHP           |
+| Développer l'API de connexion                         |   PHP           |
+| Implémenter l'authentification côté serveur           |   PHP           |
+| Gérer le token d'authentification                     |   PHP           |
+| Créer le tableau de bord                              |   HTML-CSS-JS   |
+| Tester la connexion et les accès protégés             |   -             |
+| Documenter le projet                                  |   Github        |
 
 ### Résultat attendu
 
