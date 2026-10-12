@@ -31,7 +31,8 @@ Développer une application permettant à un enseignant de se connecter de mani�
 
 À la fin du Sprint 1, un enseignant doit pouvoir saisir ses identifiants, être authentifié par l'API et accéder à son tableau de bord. Les utilisateurs non authentifiés ne doivent pas pouvoir accéder au tableau de bord.
 
-<img width="698" height="739" alt="Diagram architecture" src="https://github.com/user-attachments/assets/e66faf72-7e9b-4b01-8d70-f358cfc65aa9" />
+<img width="725" height="742" alt="Diagram architecture" src="https://github.com/user-attachments/assets/51c0394f-1064-4da5-b435-aa1d04d0d865" />
+
 
 
 
