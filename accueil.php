@@ -1,46 +1,4 @@
-<?php 
 
-
-session_start();
-
-$nom = $_SESSION['nom'] ?? "";
-$motDePasse = $_SESSION['motDePasse'] ?? "";
-$role = $_POST['role'] ?? 'enseignant';
-$erreurs = [];
-
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $nom = trim($_POST['nom'] ?? "");
-    $motDePasse = trim($_POST['motDePasse'] ?? "");
-    $role = $_POST['role'] ?? 'enseignant';
-
-    // Validation du nom d'utilisateur
-    if($nom === ""){
-        $erreurs["nom"] = "Le nom est obligatoire";
-    }
-
-    // Validation du mot de passe
-    if($motDePasse === ""){
-        $erreurs["motDePasse"] = "Le mot de passe est obligatoire";
-    }
-    
-
-    if(empty($erreurs)){
-        $_SESSION['nom'] = $nom;
-        $_SESSION['role'] = $role;
-
-        if($role === 'enseignant'){
-            header('Location: Dashboard.php');
-            exit();
-        }else{
-            header('Location: Dashboard.php');
-            exit();
-        }
-    }
-}
-
-
-
-?>
 
 
 <!DOCTYPE html>
@@ -58,17 +16,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <?php require_once 'header.php'; ?>
     <main>
         
-        <input type="hidden" name="role" id="roleInput" value="<?= htmlspecialchars($_POST['role'] ?? 'enseignant') ?>">
+        <input type="hidden" name="role" id="roleInput" value="enseignant">
 
         <div class="switch-role-container">
             <button type="button" 
-                    class="switch-btn <?= (($_POST['role'] ?? 'enseignant') === 'enseignant') ? 'active' : '' ?>" 
+                    class="switch-btn active" 
                     id="btn-enseignant" 
                     onclick="setRole('enseignant')">
                 Enseignants
             </button>
             <button type="button" 
-                    class="switch-btn <?= (($_POST['role'] ?? '') === 'etudiant') ? 'active' : '' ?>" 
+                    class="switch-btn" 
                     id="btn-etudiant" 
                     onclick="setRole('etudiant')">
                 Étudiants
@@ -78,21 +36,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <form action="" method="post" id="loginForm">
             <div>
                 <label for="nom">Nom d'utilisateur : </label>
-                <input type="text" name="nom" id="nom" value="<?= htmlspecialchars($nom); ?>"
-                class="<?= isset($erreurs['nom']) ? 'input-erreur' : '' ?>">
-                    <?php if(isset($erreurs['nom'])): ?>
-                        <p class="erreur"><?= htmlspecialchars($erreurs['nom']) ?></p>
-                    <?php endif; ?> 
+                <input type="text" name="nom" id="nom">
+                <p class="erreur" id="erreur-nom"></p>
+                
             </div>
 
             <div>
 
                 <label for="motDePasse">Mot de passe : </label>
-                <input type="password" name="motDePasse" id="motDePasse" value="<?= htmlspecialchars($motDePasse); ?>"
-                class="<?= isset($erreurs['motDePasse']) ? 'input-erreur' : '' ?>">
-                    <?php if(isset($erreurs['motDePasse'])): ?>
-                        <p class="erreur"><?= htmlspecialchars($erreurs['motDePasse']) ?></p>
-                    <?php endif; ?>
+                <input type="password" name="motDePasse" id="motDePasse">
+                <p class="erreur" id="erreur-motDePasse"></p>
             </div>
 
             <button type="submit">Se connecter</button>
@@ -120,22 +73,45 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
+        // vide les erreurs et les style precedents
+        document.getElementById('erreur-nom').textContent = '';
+        document.getElementById('erreur-motDePasse').textContent = '';
+        document.getElementById('nom').classList.remove('input-erreur');
+        document.getElementById('motDePasse').classList.remove('input-erreur');
+
         const data = {
             nom: document.getElementById('nom').value,
             motDePasse: document.getElementById('motDePasse').value,
             role: document.getElementById('roleInput').value
         };
-
-        const response = await fetch('api/connexion.php', {
+        try {
+            const response = await fetch('api/connexion.php', {
             method : 'POST',
             headers : {'Content-Type' : 'application/json'},
             body: JSON.stringify(data)
-        });
+            });
 
-        const result = await response.json();
+            const result = await response.json();
 
-        if(result.success){
-            window.location.href = result.redirect;
+            if(result.success){
+                // rediriction a la page url specifier dans connexion.php
+                window.location.href = result.redirect;
+            } else if (result.erreurs) {
+
+                // Met les text erreurs en bas des champs quand il ya une erreur
+                if (result.erreurs.nom) {
+                        document.getElementById('erreur-nom').textContent = result.erreurs.nom;
+                        document.getElementById('nom').classList.add('input-erreur');
+                    }
+                if (result.erreurs.motDePasse) {
+                    document.getElementById('erreur-motDePasse').textContent = result.erreurs.motDePasse;
+                    document.getElementById('motDePasse').classList.add('input-erreur');
+                }
+
+            }
+        } catch (error) {
+            console.error('Erreur réseau:', error);
         }
+        
     });
 </script>
