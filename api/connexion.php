@@ -60,6 +60,7 @@ if(empty($erreurs)){
     // Enregistre a la session et redirige le URL    
     $_SESSION['nom'] = $nom;
     $_SESSION['role'] = $role;
+    $_SESSION['authenticated'] = true;
 
     echo json_encode([
         "success" => true,
