@@ -52,6 +52,7 @@ Permettre à l'enseignant de créer un quiz et d'y ajouter des questions sous fo
 | Créer l'API de création d'un quiz.                    |                 |
 | Afficher la liste des quiz de l'enseignant.           |                 |
 | Créer l'interface "Ajouter une question".             |                 |
+| Permettre d'ajouter au maximum cinq réponse.          |                 |
 | Permettre de sélectionner la bonne réponse.           |                 |
 | Enregistrer les questions et les réponses.            |                 |
 | Afficher les questions du quiz.                       |                 |
