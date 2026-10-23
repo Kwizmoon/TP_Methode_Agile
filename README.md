@@ -33,6 +33,35 @@ Développer une application permettant à un enseignant de se connecter de mani�
 
 <img width="725" height="742" alt="Diagram architecture" src="https://github.com/user-attachments/assets/51c0394f-1064-4da5-b435-aa1d04d0d865" />
 
+## Sprint 2 : Création des quiz + questions
+
+### Objectif
+
+Permettre à l'enseignant de créer un quiz et d'y ajouter des questions sous forme de QCM et/ou Vrai/Faux
+
+### Tâches et outils utilisés
+
+| Tâche                                                 | Outils utilisés |
+| ----------------------------------------------------- | --------------- |
+| Créer la table des quiz.                              |                 |
+| Créer la table des questions.                         |                 |
+| Créer la table des réponses.                          |                 |
+| Définir les relations entre les tables.               |                 |
+| Créer l'interface "Créer un quiz".                    |                 |
+| Ajouter les champs titre et description.              |                 |
+| Créer l'API de création d'un quiz.                    |                 |
+| Afficher la liste des quiz de l'enseignant.           |                 |
+| Créer l'interface "Ajouter une question".             |                 |
+| Permettre d'ajouter au maximum cinq réponse.          |                 |
+| Permettre de sélectionner la bonne réponse.           |                 |
+| Enregistrer les questions et les réponses.            |                 |
+| Afficher les questions du quiz.                       |                 |
+| Ajouter un bouton de validation des formulaires.      |                 |
+| Tester la création d'un quiz complet.                 |                 |
+
+### Résultat attendu
+Un enseignant peut créer un quiz et construire ses questions sous forme QCM ou Vrai/Faux avec leurs réponses.
+
 
 
 
