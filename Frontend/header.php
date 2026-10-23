@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="main-header">
-        <a href="accueil.php" class="logo">KWIZ</a>
+        <a href="Dashboard.php" class="logo">KWIZ</a>
            
     </header>
 </body>
