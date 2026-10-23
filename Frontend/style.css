@@ -154,3 +154,100 @@ header a {
 .switch-btn:not(.active):hover {
     background-color: rgba(217, 107, 39, 0.08);
 }
+/* DASHBOARD */
+
+.dashboard {
+    max-width: 1100px;
+    width: 90%;
+    margin: 40px auto;
+}
+
+.welcome-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.welcome-card h1 {
+    color: #2563eb;
+    margin-bottom: 10px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    color: #2563eb;
+    margin-bottom: 15px;
+}
+
+.card p {
+    margin-bottom: 20px;
+}
+
+.card button {
+    width: 100%;
+}
+
+.logout-section {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.logout-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background-color: #dc2626;
+}
+
+/* Conteneur pour lier l'input et son bouton */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* S'assure que l'input prend toute la largeur et laisse de la place à droite pour l'œil */
+.input-wrapper input {
+    width: 100%;
+    padding-right: 40px; /* Évite que le texte écrit passe sous l'œil */
+    box-sizing: border-box;
+
+}
+
+/* Positionne l'œil à l'intérieur, à droite */
+.input-wrapper button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #666;
+}
