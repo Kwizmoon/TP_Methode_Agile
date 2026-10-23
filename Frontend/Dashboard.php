@@ -28,7 +28,7 @@ require_once '../middleware/auth.php';
         <div class="card">
             <h2>Créer un Quiz</h2>
             <p>Commencer une nouvelle évaluation.</p>
-            <button>Accéder</button>
+            <button onclick="window.location.href='creer_quiz.php'">Accéder</button>
         </div>
 
         <div class="card">
