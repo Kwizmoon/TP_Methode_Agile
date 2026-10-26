@@ -37,7 +37,47 @@
     </main>
 
     <script>
-        
+        document.getElementById('creationQuizForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const titre = document.getElementById('titre').value.trim();
+            const description = document.getElementById('decription').value.trim();
+            const erreurTitre = document.getElementById('erreur-titre');
+            const erreurDescription = document.getElementById('erreur-description');
+            const erreurBd = document.getElementById('erreur-bd');
+
+            erreurTitre.textContent = '';
+            erreurDescription = '';
+            erreurBd.textContent = '';
+
+            if(!titre){
+                erreurTitre.textContent = 'Le titre est obligatoire.';
+                return;
+            }
+            if(!description){
+                erreurDescription.textContent = 'La description est obligatoire.';
+                return;
+            }
+
+            try{
+                const response = await fetch('api/save_quiz.php', {
+                    method : 'POST',
+                    headers: {'Content-Type' : 'application/json'},
+                    body: JSON.stringify({titre, description})
+                });
+
+                const data = await response.json();
+
+                if(response.ok && data.success){
+                    window.location.href = `ajouter-questions.php?quiz_id=${data.quiz_id}`;
+                } else {
+                    erreurBd.textContent = data.message || 'Une erreur est survenue lors de l\'enregistrement.';
+                }
+            } catch (error){
+                console.error(error);
+                erreurBd.textContent = 'Erreur de connexion au serveur.';
+            }
+        });
 
     </script>
     
