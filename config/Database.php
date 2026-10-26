@@ -27,6 +27,14 @@ try {
         role ENUM('enseignant', 'etudiant') NOT NULL DEFAULT 'etudiant'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
+    // Table quiz (ID, titre, description, et référence à l'enseignant)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS quiz (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titre VARCHAR(100) NOT NULL UNIQUE,
+        description TEXT NOT NULL,
+        user_id INT NOT NULL,
+        FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
     // Hachage sécurisé du mot de passe
     $motDePasseClair = 'Farid123';
