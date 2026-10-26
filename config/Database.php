@@ -19,6 +19,7 @@ try {
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
 
+
     // Table users (id, nom, motdepasse, role)
     $pdo->exec("CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +27,7 @@ try {
         mot_de_passe VARCHAR(255) NOT NULL,
         role ENUM('enseignant', 'etudiant') NOT NULL DEFAULT 'etudiant'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
 
     // Table quiz (ID, titre, description, et référence à l'enseignant)
     $pdo->exec("CREATE TABLE IF NOT EXISTS quiz (
@@ -36,12 +38,24 @@ try {
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
+
     // Table questions (ID, texte de la question, et référence au quiz parent)
      $pdo->exec("CREATE TABLE IF NOT EXISTS questions (
         id INT AUTO_INCREMENT PRIMARY KEY,
         text TEXT NOT NULL,
         quiz_id INT NOT NULL,
         FOREIGN KEY(quiz_id) REFERENCES quiz(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+
+    // Table reponses (ID, texte de la réponse, indicateur de bonne/fausse réponse,
+    // et référence à la question parente, maximum de 5 réponse par question).
+    $pdo->exec("CREATE TABLE IF NOT EXISTS reponses (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        text TEXT NOT NULL,
+        est_vrai BOOLEAN NOT NULL DEFAULT 0,
+        question_id INT NOT NULL,
+        FOREIGN KEY(question_id) REFERENCES questions(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
     // Hachage sécurisé du mot de passe
