@@ -36,6 +36,14 @@ try {
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
+    // Table questions (ID, texte de la question, et référence au quiz parent)
+     $pdo->exec("CREATE TABLE IF NOT EXISTS questions (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        text TEXT NOT NULL,
+        quiz_id INT NOT NULL,
+        FOREIGN KEY(quiz_id) REFERENCES quiz(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
     // Hachage sécurisé du mot de passe
     $motDePasseClair = 'Farid123';
     $motDePasseHache = password_hash($motDePasseClair, PASSWORD_DEFAULT);
