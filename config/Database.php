@@ -1,36 +1,50 @@
 <?php
-// Base de données KWIZ (Sprint 1) - SQLite
-// Le fichier kwiz.sqlite est créé automatiquement dans le dossier database/
-// Utilisation : require_once __DIR__ . '/../config/db.php';  puis  $pdo
 
-// __DIR__ retourne le path absolue du directory que le script courant est dedans
-// .. Rentre dans le niveau suivant du directory et va dans le fichier database
-$dossier = __DIR__ . '/../database';
+$host = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'Quiz';
 
-// Check si le folder n'existe pas deja en tant que directory (is_dir)
-// 0777 Garantie full read, write, et execute permissions au folder
-if (!is_dir($dossier)) {
-    mkdir($dossier, 0777, true);
-}
+try {
+    $pdo = new PDO("mysql:host=localhost;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$pdo = new PDO("sqlite:$dossier/kwiz.sqlite", null, null, [
+    // Creation de la base de donnee si elle n'existe pas deja
+    $pdo->exec("CREATE DATABASE IF NOT EXISTS `$dbname` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+    $pdo->exec("USE `$dbname`;");
+
+
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password, [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-]);
+    ]);
 
-// Table user (id, nom, motdepasse, role)
-$pdo->exec("CREATE TABLE IF NOT EXISTS users (
-    id           INTEGER PRIMARY KEY AUTOINCREMENT,
-    nom          TEXT NOT NULL UNIQUE,
-    mot_de_passe TEXT NOT NULL,
-    role         TEXT NOT NULL DEFAULT 'etudiant' CHECK (role IN ('enseignant', 'etudiant'))
-)");
+    // Table users (id, nom, motdepasse, role)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nom VARCHAR(100) NOT NULL UNIQUE,
+        mot_de_passe VARCHAR(255) NOT NULL,
+        role ENUM('enseignant', 'etudiant') NOT NULL DEFAULT 'etudiant'
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-// Insertion de l'enseignant
-$pdo->prepare("INSERT OR IGNORE INTO users (nom, mot_de_passe, role)
-               VALUES ( :nom, :mot_de_passe , :role )")
-    ->execute([
+
+    // Hachage sécurisé du mot de passe
+    $motDePasseClair = 'Farid123';
+    $motDePasseHache = password_hash($motDePasseClair, PASSWORD_DEFAULT);
+
+    // Insertion de l'enseignant (INSERT IGNORE évite les erreurs si l'utilisateur existe déjà)
+    $stmt = $pdo->prepare("INSERT IGNORE INTO users (nom, mot_de_passe, role) 
+                        VALUES (:nom, :mot_de_passe, :role)");
+    $stmt->execute([
         'nom' => 'Farid',
-        'mot_de_passe' => 'Farid123',
+        'mot_de_passe' => $motDePasseHache,
         'role' => 'enseignant'
     ]);
+
+
+} catch (PDOException $e) {
+    exit('Connexion impossible : ' . $e->getMessage());
+}
+
+
+
