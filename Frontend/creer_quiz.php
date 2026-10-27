@@ -70,7 +70,7 @@
                 const data = await response.json();
 
                 if(response.ok && data.success){
-                    window.location.href = `ajouter-questions.php?quiz_id=${data.quiz_id}`;
+                    window.location.href = `ajouter_questions.php?quiz_id=${data.quiz_id}`;
                 } else {
                     erreurBd.textContent = data.message || 'Une erreur est survenue lors de l\'enregistrement.';
                 }
