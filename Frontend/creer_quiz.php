@@ -18,7 +18,7 @@
     <?php require_once 'header.php'; ?>
 
     <main>
-        <form action="" method="post" id="creationQuizForm">
+        <form action="" method="post" id="creationQuizForm" novalidate>
             <h2>Créer un nouveau quiz</h2>
             <div>
                 <label for="titre">Titre du quiz : </label>
@@ -44,7 +44,7 @@
 
             // vide les erreurs et les style precedents
             document.getElementById('titre').classList.remove('input-erreur');
-            document.getElementById('decription').classList.remove('input-erreur');
+            document.getElementById('description').classList.remove('input-erreur');
             document.getElementById('erreur-titre').textContent = '';
             document.getElementById('erreur-description').textContent = '';
             document.getElementById('erreur-bd').textContent = '';
@@ -52,7 +52,7 @@
 
             const data = {
                 titre: document.getElementById('titre').value.trim(),
-                description: document.getElementById('decription').value.trim()
+                description: document.getElementById('description').value.trim()
             };
 
             try{
