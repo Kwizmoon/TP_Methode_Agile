@@ -39,5 +39,36 @@
     </form>
 </main>
 
+<script>
+    const listeReponses = document.getElementById('liste-reponses');
+    const btnAjouterReponse = document.getElementById('btn-ajouter-reponse');
+    const maxReponses = 5;
+
+    // Fonction pour créer un champ de réponse dynamique
+    function creerChampReponse(){
+        const nombreActuel = listeReponses.children.length;
+
+        if(nombreActuel >= maxReponses) return; // si > 5
+        
+        const index = nombreActuel + 1;
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '10px';
+
+        div.innerHTML = `
+            <input type="radio" name="bonne_reponse" value="${nombreActuel}" required title="Définir comme une bonne réponse" style="cursor: pointer; transform: scale(1.2);">
+            <input type="text" name="reponses[]" placeholder="Réponse ${index}" required style="flex: 1;">
+            <button type="button" class="btn-supprimer" onclick="supprimerReponse(this)">X</button>
+        
+        `;
+
+        listeReponses.appendChild(div);
+        
+
+    }
+
+</script>
+
 </body>
 </html>
