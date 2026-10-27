@@ -55,7 +55,7 @@ if(empty($erreurs)){
 
     echo json_encode([
         "success" => true,
-        "redirect" => "ajouter_questions.php"
+        "redirect" => "ajouter_questions.php?quiz_id={$quizId}"
     ]);
     exit();
 
