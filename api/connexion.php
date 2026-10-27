@@ -36,31 +36,35 @@ if($motDePasse === ""){
 
 // Validation du user/motDePasse dans la BD, Limit de 1 user recuperer
 $userExist = $pdo->prepare(
-    'SELECT 1 FROM users
+    'SELECT id, nom, mot_de_passe, role FROM users
     WHERE nom = :nom
-    AND mot_de_passe = :motDePasse
     AND role = :role
     LIMIT 1   
     '
 );
 $userExist->execute([
     'nom' => $nom,
-    'motDePasse' => $motDePasse,
     'role' => $role
 ]);
 
-// fetchColumn check si un row a etait trouver et retourn 1 ou 0, pour checker si un user a ete trouver
-if ($userExist->fetchColumn() == false && $champsValides == true){
-    $erreurs["bd"] = "L'utilisateur n'existe pas.";
-}
+// Recupere la ligne sous forme de tableau associatif
+$user = $userExist->fetch();
 
+// Verifier si l'utilisateur existe et si le mot de passe haché correspond
+if (!$user || !password_verify($motDePasse, $user['mot_de_passe'])) {
+    if ($champsValides) {
+        $erreurs["bd"] = "Nom d'utilisateur, mot de passe ou rôle incorrect.";
+    }
+}
 
 // Enregistre a la session et redirige le URL si ya pas d'erreurs
 if(empty($erreurs)){
     // Enregistre a la session et redirige le URL    
-    $_SESSION['nom'] = $nom;
-    $_SESSION['role'] = $role;
+    $_SESSION['id'] = $user['id']; 
+    $_SESSION['nom'] = $user['nom'];
+    $_SESSION['role'] = $user['role'];
     $_SESSION['authenticated'] = true;
+
 
     echo json_encode([
         "success" => true,
