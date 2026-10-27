@@ -28,7 +28,7 @@ if($titre === ""){
 }
 
 // Validation de la description
-if($motDePasse === ""){
+if($description === ""){
     $erreurs["description"] = "La description est obligatoire";
     $champsValides = false;
 }
