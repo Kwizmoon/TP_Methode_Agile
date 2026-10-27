@@ -1,0 +1,82 @@
+<?php
+    require_once '../middleware/auth.php';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter les questions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+<?php require_once 'header.php'; ?>
+
+<main class="main-builder">
+    <form action="" method="post">
+        <h2>Ajouter une question</h2>
+        <div>
+            <label for="question">Question : </label>
+            <input type="text" name="question" id="question" required>
+            <p class="erreur" id="erreur-question"></p>
+        </div>
+
+        <div class="reponses-section">
+            <h3>Réponses (Maximum : 5)</h3>
+            <div id="liste-reponses">
+
+            </div>
+            <button type="button" id="btn-ajouter-reponse" class="btn-secondaire">+ Ajouter une réponse</button>
+            <p class="erreur" id="erreur-reponses"></p>
+        </div>
+
+        <div class="form-actions" style="margin-top: 20px;">
+            <button type="submit" id="btn-valider">Valider la question</button>
+        </div>
+        <p class="erreur" id="erreur-global"></p>
+    </form>
+</main>
+
+<script>
+    const listeReponses = document.getElementById('liste-reponses');
+    const btnAjouterReponse = document.getElementById('btn-ajouter-reponse');
+    const maxReponses = 5;
+
+    // Fonction pour créer un champ de réponse dynamique
+    function creerChampReponse(){
+        const nombreActuel = listeReponses.children.length;
+
+        if(nombreActuel >= maxReponses) return; // si > 5
+        
+        const index = nombreActuel + 1;
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '10px';
+
+        div.innerHTML = `
+            <input type="radio" name="bonne_reponse" value="${nombreActuel}" required title="Définir comme une bonne réponse" style="cursor: pointer; transform: scale(1.2);">
+            <input type="text" name="reponses[]" placeholder="Réponse ${index}" required style="flex: 1;">
+            <button type="button" class="btn-supprimer" onclick="supprimerReponse(this)">X</button>
+        
+        `;
+
+        listeReponses.appendChild(div);
+        
+
+    }
+
+    function verifierLimite(){
+        if(listeReponses.children.length >= maxReponses){
+            btnAjouterReponse.style.display = 'none';
+        }else{
+            btnAjouterReponse.style.display = 'block';
+        }
+    }
+
+</script>
+
+</body>
+</html>
