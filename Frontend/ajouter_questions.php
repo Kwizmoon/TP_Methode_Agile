@@ -39,44 +39,72 @@
     </form>
 </main>
 
-<script>
-    const listeReponses = document.getElementById('liste-reponses');
-    const btnAjouterReponse = document.getElementById('btn-ajouter-reponse');
-    const maxReponses = 5;
+    <script>
+        const listeReponses = document.getElementById('liste-reponses');
+        const btnAjouterReponse = document.getElementById('btn-ajouter-reponse');
+        const maxReponses = 5;
 
-    // Fonction pour créer un champ de réponse dynamique
-    function creerChampReponse(){
-        const nombreActuel = listeReponses.children.length;
+        // Fonction pour créer un champ de réponse dynamique
+        function creerChampReponse(){
+            const nombreActuel = listeReponses.children.length;
 
-        if(nombreActuel >= maxReponses) return; // si > 5
-        
-        const index = nombreActuel + 1;
-        const div = document.createElement('div');
-        div.style.display = 'flex';
-        div.style.alignItems = 'center';
-        div.style.gap = '10px';
+            if(nombreActuel >= maxReponses) return; // si > 5
+            
+            const index = nombreActuel + 1;
+            const div = document.createElement('div');
+            div.style.display = 'flex';
+            div.style.alignItems = 'center';
+            div.style.gap = '10px';
 
-        div.innerHTML = `
-            <input type="radio" name="bonne_reponse" value="${nombreActuel}" required title="Définir comme une bonne réponse" style="cursor: pointer; transform: scale(1.2);">
-            <input type="text" name="reponses[]" placeholder="Réponse ${index}" required style="flex: 1;">
-            <button type="button" class="btn-supprimer" onclick="supprimerReponse(this)">X</button>
-        
-        `;
+            div.innerHTML = `
+                <input type="radio" name="bonne_reponse" value="${nombreActuel}" required title="Définir comme une bonne réponse" style="cursor: pointer; transform: scale(1.2);">
+                <input type="text" name="reponses[]" placeholder="Réponse ${index}" required style="flex: 1;">
+                <button type="button" class="btn-supprimer" onclick="supprimerReponse(this)">X</button>
+            
+            `;
 
-        listeReponses.appendChild(div);
-        
+            listeReponses.appendChild(div);
+            mettreAJour();
+            verifierLimite();
 
-    }
-
-    function verifierLimite(){
-        if(listeReponses.children.length >= maxReponses){
-            btnAjouterReponse.style.display = 'none';
-        }else{
-            btnAjouterReponse.style.display = 'block';
         }
-    }
 
-</script>
+        function mettreAJour(){
+            const lignes = listeReponses.children;
+            for(let i = 0; i < lignes.length; i++){
+                const radio = lignes[i].querySelector('input[type="radio"]');
+                const texte = lignes[i].querySelector('input[type="text"]');
+                radio.value = i;
+                inputTexte.placeholder = `Réponse ${i + 1}`;
+            }
+        }
+
+        function verifierLimite(){
+            if(listeReponses.children.length >= maxReponses){
+                btnAjouterReponse.style.display = 'none';
+            }else{
+                btnAjouterReponse.style.display = 'block';
+            }
+        }
+        // Écouteur sur le bouton d'ajout
+        btnAjouterReponse.addEventListener('click', creerChampReponse);
+        
+        // Validation de la soumission
+        document.getElementById('formQuestion').addEventListener('submit', function(e) {
+            const radios = document.querySelectorAll('input[type="radio"][name="bonne-reponse"]');
+            let uneCochee = false;
+
+            radios.forEach(radio => {
+                if(radio.checked) uneCochee = true;
+            });
+
+            if(!uneCochee){ // si pas cochée
+                e.preventDefault();
+                document.getElementById('erreur-reponses').textContent = "Veuillez sélectionner la bonne réponse parmi les choix.";
+            }
+        });
+
+    </script>
 
 </body>
 </html>
