@@ -52,22 +52,25 @@
             
             const index = nombreActuel + 1;
             const div = document.createElement('div');
+            
             div.style.display = 'flex';
+            div.style.flexDirection = 'row';
             div.style.alignItems = 'center';
             div.style.gap = '10px';
+            div.style.marginBottom = '10px';
+            div.style.width = '100%';
 
             div.innerHTML = `
-                <input type="radio" name="bonne_reponse" value="${nombreActuel}" required title="Définir comme une bonne réponse" style="cursor: pointer; transform: scale(1.2);">
                 <input type="text" name="reponses[]" placeholder="Réponse ${index}" required style="flex: 1;">
+                <input type="radio" name="bonne_reponse" value="${nombreActuel}" required title="Définir comme une bonne réponse" style="cursor: pointer; transform: scale(1.2);">
                 <button type="button" class="btn-supprimer" onclick="supprimerReponse(this)">X</button>
-            
             `;
 
             listeReponses.appendChild(div);
-            mettreAJour();
             verifierLimite();
 
         }
+
 
         function mettreAJour(){
             const lignes = listeReponses.children;
