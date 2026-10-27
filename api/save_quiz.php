@@ -32,3 +32,39 @@ if($motDePasse === ""){
     $erreurs["description"] = "La description est obligatoire";
     $champsValides = false;
 }
+
+
+// Insertion du quiz dans la bd
+$insertionQuiz = $pdo->prepare(
+    "INSERT IGNORE INTO quiz (titre, description, user_id)
+    VALUES (:titre, :description, :user_id)"
+);
+
+$insertionQuiz->execute([
+    'titre' => $titre,
+    'description' => $description,
+    'user_id' => $_SESSION['id']
+]);
+
+// Recuperer l'ID du quiz qui vient d'être creer
+$quizId = $pdo->lastInsertId();
+
+if(empty($erreurs)){
+
+    $_SESSION['quiz_id'] = $quizId;
+
+    echo json_encode([
+        "success" => true,
+        "redirect" => "ajouter_questions.php"
+    ]);
+    exit();
+
+} else {
+
+    http_response_code(400);
+    echo json_encode([
+        "success" => false, 
+        "erreurs" => $erreurs
+    ]);
+    exit();
+};
