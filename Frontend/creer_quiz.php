@@ -29,9 +29,10 @@
             <div>
                 <label for="description">Description :</label>
                 <textarea name="description" id="description" class="input-description"></textarea>
+                <p class="erreur" id="erreur-description"></p>
             </div>
 
-            <button onclick="window.location.href='ajouter-questions.php'" type="submit" >Suivant</button>
+            <button type="submit">Suivant</button>
             
             <p class="erreur" id="erreur-bd"></p>
         </form>
@@ -41,38 +42,46 @@
         document.getElementById('creationQuizForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            const titre = document.getElementById('titre').value.trim();
-            const description = document.getElementById('decription').value.trim();
-            const erreurTitre = document.getElementById('erreur-titre');
-            const erreurDescription = document.getElementById('erreur-description');
-            const erreurBd = document.getElementById('erreur-bd');
+            // vide les erreurs et les style precedents
+            document.getElementById('titre').classList.remove('input-erreur');
+            document.getElementById('decription').classList.remove('input-erreur');
+            document.getElementById('erreur-titre').textContent = '';
+            document.getElementById('erreur-description').textContent = '';
+            document.getElementById('erreur-bd').textContent = '';
 
-            erreurTitre.textContent = '';
-            erreurDescription = '';
-            erreurBd.textContent = '';
 
-            if(!titre){
-                erreurTitre.textContent = 'Le titre est obligatoire.';
-                return;
-            }
-            if(!description){
-                erreurDescription.textContent = 'La description est obligatoire.';
-                return;
-            }
+            const data = {
+                titre: document.getElementById('titre').value.trim(),
+                description: document.getElementById('decription').value.trim()
+            };
 
             try{
-                const response = await fetch('api/save_quiz.php', {
+                const response = await fetch('../api/save_quiz.php', {
                     method : 'POST',
                     headers: {'Content-Type' : 'application/json'},
-                    body: JSON.stringify({titre, description})
+                    body: JSON.stringify(data)
                 });
 
-                const data = await response.json();
+                const result = await response.json();
 
-                if(response.ok && data.success){
-                    window.location.href = `ajouter_questions.php?quiz_id=${data.quiz_id}`;
-                } else {
-                    erreurBd.textContent = data.message || 'Une erreur est survenue lors de l\'enregistrement.';
+                if(result.success){
+                // rediriction a la page url specifier dans save_quiz.php
+                window.location.href = result.redirect;
+                } else if (result.erreurs){
+                    
+                    if (result.erreurs.titre) {
+                        document.getElementById('erreur-titre').textContent = result.erreurs.titre;
+                        document.getElementById('titre').classList.add('input-erreur');
+                    }
+
+                    if (result.erreurs.description) {
+                        document.getElementById('erreur-description').textContent = result.erreurs.description;
+                        document.getElementById('description').classList.add('input-erreur');
+                    }
+
+                    if (result.erreurs.bd) {
+                    document.getElementById('erreur-bd').textContent = result.erreurs.bd;
+                }
                 }
             } catch (error){
                 console.error(error);
