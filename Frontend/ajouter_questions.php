@@ -70,7 +70,11 @@
             verifierLimite();
 
         }
-
+        function suppressionReponse(bouton){
+            bouton.parentElement.remove();
+            mettreAJour();
+            verifierLimite();
+        }
 
         function mettreAJour(){
             const lignes = listeReponses.children;
