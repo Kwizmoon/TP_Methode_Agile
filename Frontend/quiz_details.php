@@ -15,7 +15,7 @@ require_once '../middleware/auth.php';
 
 
 
-    <link rel="stylesheet" href="Frontend/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 
