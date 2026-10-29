@@ -90,9 +90,12 @@ require_once '../middleware/auth.php';
                 description.textContent = q.description + ' (' + q.nb_questions + (q.nb_questions == 1 ? ' question)' : ' questions)');
 
                 const bouton = document.createElement('button');
-                bouton.textContent = 'Ajouter des questions';
-                bouton.onclick = function(){
-                    window.location.href = 'ajouter_questions.php?quiz_id=' + q.id;
+                bouton.textContent = 'Voir les détails';
+
+                // Un clic sur la carte (ou sur le bouton) ouvre la page de details du quiz
+                carte.style.cursor = 'pointer';
+                carte.onclick = function(){
+                    window.location.href = '../quiz_details.php?quiz_id=' + q.id;
                 };
 
                 carte.append(titre, description, bouton);
