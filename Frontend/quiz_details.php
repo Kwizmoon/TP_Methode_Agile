@@ -59,24 +59,16 @@ require_once '../middleware/auth.php';
 
 
 
-        fetch(`api/get_quiz_details.php?id=${quizId}`)
-
-
+        fetch(`../api/get_quiz_details.php`)
 
             .then(response => {
                 console.log("Status :", response.status);
                 return response.json();
             })
 
-
-
             .then(data => {
 
-
-
                 console.log(data);
-
-
 
                 if (!data.success) {
                     document.getElementById("quiz-container").innerHTML =
@@ -84,11 +76,7 @@ require_once '../middleware/auth.php';
                     return;
                 }
 
-
-
                 const quiz = data.quiz;
-
-
 
                 let html = `
                     <div class="welcome-card">
@@ -97,11 +85,7 @@ require_once '../middleware/auth.php';
                     </div>
                 `;
 
-
-
                 quiz.questions.forEach(question => {
-
-
 
                     html += `
                         <div class="card">
@@ -109,11 +93,7 @@ require_once '../middleware/auth.php';
                             <ul>
                     `;
 
-
-
                     question.reponses.forEach(reponse => {
-
-
 
                         html += `
                             <li>
@@ -122,43 +102,24 @@ require_once '../middleware/auth.php';
                             </li>
                         `;
 
-
-
                     });
-
-
 
                     html += `
                             </ul>
                         </div>
                     `;
 
-
-
                 });
-
-
 
                 document.getElementById("quiz-container").innerHTML = html;
 
-
-
             })
-
-
-
             .catch(error => {
-
-
 
                 console.error(error);
 
-
-
                 document.getElementById("quiz-container").innerHTML =
                     `<p>Erreur lors du chargement du quiz.</p>`;
-
-
 
             });
     }
