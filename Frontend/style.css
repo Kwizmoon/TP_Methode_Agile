@@ -80,8 +80,8 @@ input[type="password"]:focus {
     font-weight: 500;
 }
 
-/* Bouton */
-button {
+/* Bouton normal*/
+.btn {
     background-color: #2563eb;
     color: #ffffff;
     border: none;
@@ -286,9 +286,6 @@ textarea.input-description:focus {
 }
 
 
-.createQuizForm{
-
-}
 
 main.main-builder{
     max-width: 750px !important;
