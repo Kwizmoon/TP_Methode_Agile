@@ -41,23 +41,23 @@ Permettre à l'enseignant de créer un quiz et d'y ajouter des questions sous fo
 
 ### Tâches et outils utilisés
 
-| Tâche                                                 | Outils utilisés |
-| ----------------------------------------------------- | --------------- |
-| Créer la table des quiz.                              |                 |
-| Créer la table des questions.                         |                 |
-| Créer la table des réponses.                          |                 |
-| Définir les relations entre les tables.               |                 |
-| Créer l'interface "Créer un quiz".                    |                 |
-| Ajouter les champs titre et description.              |                 |
-| Créer l'API de création d'un quiz.                    |                 |
-| Afficher la liste des quiz de l'enseignant.           |                 |
-| Créer l'interface "Ajouter une question".             |                 |
-| Permettre d'ajouter au maximum cinq réponse.          |                 |
-| Permettre de sélectionner la bonne réponse.           |                 |
-| Enregistrer les questions et les réponses.            |                 |
-| Afficher les questions du quiz.                       |                 |
-| Ajouter un bouton de validation des formulaires.      |                 |
-| Tester la création d'un quiz complet.                 |                 |
+| Tâche                                                 | Outils utilisés    |
+| ----------------------------------------------------- | ------------------ |
+| Créer la table des quiz.                              | MySql              |
+| Créer la table des questions.                         | MySql              |
+| Créer la table des réponses.                          | MySql              |
+| Définir les relations entre les tables.               | MySql              |
+| Créer l'interface "Créer un quiz".                    | HTML, CSS          |
+| Ajouter les champs titre et description.              | HTML               |
+| Créer l'API de création d'un quiz.                    | PHP                |
+| Afficher la liste des quiz de l'enseignant.           | HTML, JS           |
+| Créer l'interface "Ajouter une question".             | HTML, CSS          |
+| Permettre d'ajouter au maximum cinq réponse.          | JS                 |
+| Permettre de sélectionner la bonne réponse.           | HTML               |
+| Enregistrer les questions et les réponses.            | PHP, MySql         |
+| Afficher les questions du quiz.                       | HTML, JS, CSS      |
+| Ajouter un bouton de validation des formulaires.      | HTML, JS, CSS, PHP |
+| Tester la création d'un quiz complet.                 |                    |
 
 ### Résultat attendu
 Un enseignant peut créer un quiz et construire ses questions sous forme QCM ou Vrai/Faux avec leurs réponses.
