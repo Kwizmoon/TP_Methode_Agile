@@ -13,15 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     exit;
 }
 
-// Verifie que l'utilisateur est connecte et qu'il est enseignant
-if (empty($_SESSION['authenticated']) || ($_SESSION['role'] ?? '') !== 'enseignant') {
-    http_response_code(401);
-    echo json_encode([
-        "success" => false,
-        "message" => "Accès non autorisé"
-    ]);
-    exit;
-}
+
 
 // Recupere les quiz de l'enseignant connecte, avec leur nombre de questions
 $recupQuiz = $pdo->prepare(
