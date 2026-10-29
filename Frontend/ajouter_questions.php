@@ -15,7 +15,7 @@
 <?php require_once 'header.php'; ?>
 
 <main class="main-builder">
-    <form action="" method="post">
+    <form id="formQuestion" novalidate>
         <h2>Ajouter une question</h2>
         <div>
             <label for="question">Question : </label>
@@ -34,6 +34,7 @@
 
         <div class="form-actions" style="margin-top: 20px;">
             <button type="submit" id="btn-valider">Ajouter la question</button>
+            <button type="button" onclick="window.location.href='Dashboard.php';">Terminer</button>
         </div>
         <p class="erreur" id="erreur-global"></p>
     </form>
@@ -42,6 +43,7 @@
     <script>
         const listeReponses = document.getElementById('liste-reponses');
         const btnAjouterReponse = document.getElementById('btn-ajouter-reponse');
+        const formQuestion = document.getElementById('formQuestion');
         const maxReponses = 5;
 
         // Fonction pour créer un champ de réponse dynamique
@@ -100,18 +102,78 @@
         // Écouteur sur le bouton d'ajout
         btnAjouterReponse.addEventListener('click', creerChampReponse);
         
-        // Validation de la soumission
-        document.getElementById('formQuestion').addEventListener('submit', function(e) {
-            const radios = document.querySelectorAll('input[type="radio"][name="bonne-reponse"]');
-            let uneCochee = false;
+        // Soumission du formulaire avec l'API
+        formQuestion.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-            radios.forEach(radio => {
-                if(radio.checked) uneCochee = true;
-            });
+            document.getElementById('erreur-question').textContent = '';
+            document.getElementById('erreur-reponses').textContent = '';
+            document.getElementById('erreur-global').textContent = '';
 
-            if(!uneCochee){ // si pas cochée
-                e.preventDefault();
-                document.getElementById('erreur-reponses').textContent = "Veuillez sélectionner la bonne réponse parmi les choix.";
+            const question = document.getElementById('question').value.trim();
+            const lignes = listeReponses.querySelectorAll('.reponse-ligne');
+
+            const reponses = Array.from(lignes).map(ligne => ({
+                texte: ligne.querySelector('input[type="text"]').value.trim(),
+                correct: ligne.querySelector('input[type="radio"]').checked
+            }));
+
+            if (question === '') {
+                document.getElementById('erreur-question').textContent = 'La question est obligatoire.';
+                return;
+            }
+
+            if (reponses.length < 2) {
+                document.getElementById('erreur-reponses').textContent = 'Minimum de 2 réponses.';
+                return;
+            }
+
+            if (reponses.some(rep => rep.texte === '')) {
+                document.getElementById('erreur-reponses').textContent = 'Une réponse ne peut pas être vide.';
+                return;
+            }
+
+            if (reponses.filter(rep => rep.correct).length !== 1) {
+                document.getElementById('erreur-reponses').textContent = 'Vous devez sélectionner une bonne réponse.';
+                return;
+            }
+
+            try {
+                const response = await fetch('../api/save_questions.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        question: question,
+                        reponses: reponses
+                    })
+                });
+
+                const resultat = await response.json();
+
+                if (response.ok && resultat.success) {
+                    window.location.href = resultat.redirect;
+                } else if (resultat.erreurs) {
+                    if (resultat.erreurs.question) {
+                        document.getElementById('erreur-question').textContent = resultat.erreurs.question;
+                    }
+
+                    if (resultat.erreurs.reponses || resultat.erreurs.reponse_text) {
+                        document.getElementById('erreur-reponses').textContent =
+                            resultat.erreurs.reponses || resultat.erreurs.reponse_text;
+                    }
+
+                    if (resultat.erreurs.correct) {
+                        document.getElementById('erreur-reponses').textContent = resultat.erreurs.correct;
+                    }
+                } else {
+                    document.getElementById('erreur-global').textContent = 'Une erreur est survenue.';
+                }
+
+            } catch (erreur) {
+                console.error(erreur);
+                document.getElementById('erreur-global').textContent = 'Impossible de communiquer avec le serveur.';
             }
         });
 
