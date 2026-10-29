@@ -95,7 +95,7 @@ require_once '../middleware/auth.php';
                 // Un clic sur la carte (ou sur le bouton) ouvre la page de details du quiz
                 carte.style.cursor = 'pointer';
                 carte.onclick = function(){
-                    window.location.href = '../quiz_details.php?quiz_id=' + q.id;
+                    window.location.href = '../Frontend/quiz_details.php?id=' + q.id;
                 };
 
                 carte.append(titre, description, bouton);
