@@ -59,7 +59,7 @@ require_once '../middleware/auth.php';
 
 
 
-        fetch(`api/get_quiz_details.php?id=${quizId}`)
+        fetch(`../api/get_quiz_details.php?id=${quizId}`)
 
 
 
