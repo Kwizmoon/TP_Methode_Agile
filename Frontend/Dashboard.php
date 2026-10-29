@@ -28,19 +28,19 @@ require_once '../middleware/auth.php';
         <div class="card">
             <h2>Créer un Quiz</h2>
             <p>Commencer une nouvelle évaluation.</p>
-            <button onclick="window.location.href='creer_quiz.php'">Accéder</button>
+            <button class="btn" onclick="window.location.href='creer_quiz.php'">Accéder</button>
         </div>
 
         <div class="card">
             <h2>Mes Quiz</h2>
             <p>Modifier ou consulter vos quiz.</p>
-            <button onclick="document.getElementById('mes-quiz').scrollIntoView({ behavior: 'smooth' })">Accéder</button>
+            <button class="btn" onclick="document.getElementById('mes-quiz').scrollIntoView({ behavior: 'smooth' })">Accéder</button>
         </div>
 
         <div class="card">
             <h2>Résultats</h2>
             <p>Suivre les performances des étudiants.</p>
-            <button>Accéder</button>
+            <button class="btn">Accéder</button>
         </div>
 
     </div>
@@ -90,6 +90,7 @@ require_once '../middleware/auth.php';
                 description.textContent = q.description + ' (' + q.nb_questions + (q.nb_questions == 1 ? ' question)' : ' questions)');
 
                 const bouton = document.createElement('button');
+                bouton.classList.add('btn');
                 bouton.textContent = 'Voir les détails';
 
                 // Un clic sur la carte (ou sur le bouton) ouvre la page de details du quiz
