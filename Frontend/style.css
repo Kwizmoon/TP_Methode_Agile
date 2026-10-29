@@ -80,6 +80,20 @@ input[type="password"]:focus {
     font-weight: 500;
 }
 
+/* Bouton */
+button {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 0.5rem;
+}
+
 /* Bouton de soumission */
 button[type="submit"] {
     background-color: #2563eb;
