@@ -1,3 +1,9 @@
+<?php
+
+require_once '../middleware/auth.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -16,12 +22,7 @@
 
 <body>
 
-
-
-<header class="main-header">
-    <a href="Frontend/Dashboard.php">Kwizmoon</a>
-</header>
-
+<?php require_once 'header.php'; ?>
 
 
 <div class="dashboard">
@@ -42,83 +43,94 @@
 
 
 
-const params = new URLSearchParams(window.location.search);
-const quizId = params.get("id");
+    const params = new URLSearchParams(window.location.search);
+    const quizId = params.get("id");
 
 
 
-console.log("Quiz ID :", quizId);
+    console.log("Quiz ID :", quizId);
 
 
 
-if (!quizId) {
-    document.getElementById("quiz-container").innerHTML =
-        "<p>Aucun quiz sélectionné.</p>";
-} else {
+    if (!quizId) {
+        document.getElementById("quiz-container").innerHTML =
+            "<p>Aucun quiz sélectionné.</p>";
+    } else {
 
 
 
-    fetch(`api/get_quiz_details.php?id=${quizId}`)
+        fetch(`api/get_quiz_details.php?id=${quizId}`)
 
 
 
-        .then(response => {
-            console.log("Status :", response.status);
-            return response.json();
-        })
+            .then(response => {
+                console.log("Status :", response.status);
+                return response.json();
+            })
 
 
 
-        .then(data => {
+            .then(data => {
 
 
 
-            console.log(data);
+                console.log(data);
 
 
 
-            if (!data.success) {
-                document.getElementById("quiz-container").innerHTML =
-                    `<p>${data.message}</p>`;
-                return;
-            }
+                if (!data.success) {
+                    document.getElementById("quiz-container").innerHTML =
+                        `<p>${data.message}</p>`;
+                    return;
+                }
 
 
 
-            const quiz = data.quiz;
+                const quiz = data.quiz;
 
 
 
-            let html = `
-                <div class="welcome-card">
-                    <h1>${quiz.titre}</h1>
-                    <p>${quiz.description}</p>
-                </div>
-            `;
-
-
-
-            quiz.questions.forEach(question => {
-
-
-
-                html += `
-                    <div class="card">
-                        <h2>${question.text}</h2>
-                        <ul>
+                let html = `
+                    <div class="welcome-card">
+                        <h1>${quiz.titre}</h1>
+                        <p>${quiz.description}</p>
+                    </div>
                 `;
 
 
 
-                question.reponses.forEach(reponse => {
+                quiz.questions.forEach(question => {
 
 
 
                     html += `
-                        <li>
-                            ${reponse.text}
-                            ${reponse.est_vrai == 1 ? '✅' : ''}
-                        </li>
+                        <div class="card">
+                            <h2>${question.text}</h2>
+                            <ul>
+                    `;
+
+
+
+                    question.reponses.forEach(reponse => {
+
+
+
+                        html += `
+                            <li>
+                                ${reponse.text}
+                                ${reponse.est_vrai == 1 ? '✅' : ''}
+                            </li>
+                        `;
+
+
+
+                    });
+
+
+
+                    html += `
+                            </ul>
+                        </div>
                     `;
 
 
@@ -127,40 +139,29 @@ if (!quizId) {
 
 
 
-                html += `
-                        </ul>
-                    </div>
-                `;
+                document.getElementById("quiz-container").innerHTML = html;
+
+
+
+            })
+
+
+
+            .catch(error => {
+
+
+
+                console.error(error);
+
+
+
+                document.getElementById("quiz-container").innerHTML =
+                    `<p>Erreur lors du chargement du quiz.</p>`;
 
 
 
             });
-
-
-
-            document.getElementById("quiz-container").innerHTML = html;
-
-
-
-        })
-
-
-
-        .catch(error => {
-
-
-
-            console.error(error);
-
-
-
-            document.getElementById("quiz-container").innerHTML =
-                `<p>Erreur lors du chargement du quiz.</p>`;
-
-
-
-        });
-}
+    }
 
 
 
