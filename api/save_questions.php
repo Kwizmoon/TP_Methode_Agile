@@ -61,34 +61,36 @@ if(!is_array($reponses) ||count($reponses) < 2){
     } 
 }
 
-// Insertion de la question et des réponses dans la BD
-$insertionQuestion = $pdo->prepare(
-    "INSERT IGNORE INTO questions (text, quiz_id)
-    VALUES(:text, :quiz_id)"
-);
 
-$insertionQuestion->execute([
-    'text' => $question,
-    'quiz_id' => $_SESSION['id']
-]);
-
-// Récupérer le ID de la question
-$questionId = $pdo->lastInsertId();
-
-$insertionReponses = $pdo->prepare(
-    "INSERT IGNORE INTO reponses (text, est_vrai, question_id)
-    VALUES(:text, :est_vrai, :question_id)"
-);
-
-foreach($reponses as $rep){
-    $insertionReponses->execute([
-        'text' => $rep['texte'],
-        'est_vrai' => $rep['correct'],
-        'question_id' => $questionId
-    ]);
-}
 
 if(empty($erreurs)){
+
+    // Insertion de la question et des réponses dans la BD
+    $insertionQuestion = $pdo->prepare(
+        "INSERT IGNORE INTO questions (text, quiz_id)
+        VALUES(:text, :quiz_id)"
+    );
+
+    $insertionQuestion->execute([
+        'text' => $question,
+        'quiz_id' => $_SESSION['id']
+    ]);
+
+    // Récupérer le ID de la question
+    $questionId = $pdo->lastInsertId();
+
+    $insertionReponses = $pdo->prepare(
+        "INSERT IGNORE INTO reponses (text, est_vrai, question_id)
+        VALUES(:text, :est_vrai, :question_id)"
+    );
+
+    foreach($reponses as $rep){
+        $insertionReponses->execute([
+            'text' => $rep['texte'],
+            'est_vrai' => $rep['correct'],
+            'question_id' => $questionId
+        ]);
+    }
 
     echo json_encode([
         "success" => true,
