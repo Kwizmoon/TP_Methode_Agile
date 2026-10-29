@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-// Recuper les donnees envoyer en JSON et les transforment en tableau PHP
+// Récupérer les donnees envoyer en JSON et les transforment en tableau PHP
 $data = json_decode(file_get_contents("php://input"), true);
 
 $titre = trim($data['titre'] ?? "");

@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-actions" style="margin-top: 20px;">
-            <button type="submit" id="btn-valider">Valider la question</button>
+            <button type="submit" id="btn-valider">Ajouter la question</button>
         </div>
         <p class="erreur" id="erreur-global"></p>
     </form>
@@ -52,6 +52,7 @@
             
             const index = nombreActuel + 1;
             const div = document.createElement('div');
+            div.className = 'reponse-ligne';
             
             div.style.display = 'flex';
             div.style.flexDirection = 'row';
@@ -70,8 +71,11 @@
             verifierLimite();
 
         }
-        function suppressionReponse(bouton){
-            bouton.parentElement.remove();
+        function supprimerReponse(bouton){
+            const ligne = bouton.closest('.reponse-ligne');
+            if(ligne){
+                ligne.remove();
+            }
             mettreAJour();
             verifierLimite();
         }
@@ -82,7 +86,7 @@
                 const radio = lignes[i].querySelector('input[type="radio"]');
                 const texte = lignes[i].querySelector('input[type="text"]');
                 radio.value = i;
-                inputTexte.placeholder = `Réponse ${i + 1}`;
+                texte.placeholder = `Réponse ${i + 1}`;
             }
         }
 

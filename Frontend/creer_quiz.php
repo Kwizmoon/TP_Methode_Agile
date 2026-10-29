@@ -85,7 +85,7 @@
                 }
             } catch (error){
                 console.error(error);
-                erreurBd.textContent = 'Erreur de connexion au serveur.';
+                
             }
         });
 
