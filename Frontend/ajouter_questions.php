@@ -34,7 +34,7 @@
 
         <div class="form-actions" style="margin-top: 20px;">
             <button type="submit" id="btn-valider">Ajouter la question</button>
-            <button type="button" onclick="window.location.href='Dashboard.php';">Terminer</button>
+            <button class="btn" onclick="window.location.href='Dashboard.php';">Terminer</button>
         </div>
         <p class="erreur" id="erreur-global"></p>
     </form>
