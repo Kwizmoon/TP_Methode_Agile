@@ -37,7 +37,7 @@ if(!is_array($reponses) ||count($reponses) < 2){
 
 } else {
     // Parcourir chaque réponse pour vérifier son contenu et son statut true/false
-    foreach ($reponses as $index => $rep) {
+    foreach ($reponses as $rep) {
         $texte = trim($rep['texte'] ?? '');
         
         // On récupère le true ou false envoyé par le JS
@@ -45,7 +45,7 @@ if(!is_array($reponses) ||count($reponses) < 2){
 
         // Vérification : est-ce que le texte de la réponse est vide ?
         if ($texte === "") {
-            $erreurs["reponse_$index"] = "La réponse #" . ($index + 1) . " ne peut pas être vide.";
+            $erreurs["reponse_text"] = "Une réponse ne peut pas être vide.";
         }
 
         // Si cette réponse a 'correct' à true, on incrémente notre compteur
@@ -80,13 +80,31 @@ $insertionReponses = $pdo->prepare(
     VALUES(:text, :est_vrai, :question_id)"
 );
 
-foreach($reponses as $index => $rep){
+foreach($reponses as $rep){
     $insertionReponses->execute([
         'text' => $rep['texte'],
         'est_vrai' => $rep['correct'],
         'question_id' => $questionId
     ]);
 }
+
+if(empty($erreurs)){
+
+    echo json_encode([
+        "success" => true,
+        "redirect" => "ajouter_questions.php?quiz_id={$_SESSION['quiz_id']}"
+    ]);
+    exit();
+
+} else {
+
+    http_response_code(400);
+    echo json_encode([
+        "success" => false, 
+        "erreurs" => $erreurs
+    ]);
+    exit();
+};
 
 
 ?>
