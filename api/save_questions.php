@@ -3,7 +3,7 @@
 session_start();
 require __DIR__ .   '/../config/Database.php';
 
-header("Content-Type : application/json; charset=utf-8");
+header("Content-Type: application/json; charset=utf-8");
 
 // Verifie la methode HTTP, accepte juste les requetes POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -73,7 +73,7 @@ if(empty($erreurs)){
 
     $insertionQuestion->execute([
         'text' => $question,
-        'quiz_id' => $_SESSION['id']
+        'quiz_id' => $_SESSION['quiz_id']
     ]);
 
     // Récupérer le ID de la question
