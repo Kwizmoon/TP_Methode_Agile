@@ -1,5 +1,22 @@
 <?php
 
+// 1. Check if there is an active internet connection first
+function hasInternetAccess() {
+    // Tries to connect to Cloudflare's public DNS (1.1.1.1) on port 80 with a 2-second timeout
+    $connected = @fsockopen("1.1.1.1", 80, $errno, $errstr, 2);
+    if ($connected) {
+        fclose($connected);
+        return true;
+    }
+    return false;
+}
+
+// 2. If there's no internet (airplane mode / Wi-Fi off), stop the script immediately
+if (!hasInternetAccess()) {
+    exit('Erreur : Vous devez être connecté au Wi-Fi pour accéder à cette base de données !');
+}
+
+
 $host = 'localhost';
 $username = 'root';
 $password = '';
