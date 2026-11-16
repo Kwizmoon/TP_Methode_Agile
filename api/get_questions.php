@@ -18,11 +18,12 @@ try{
     $stmt->execute([$quiz_id]);
     $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Compter les réponses pour chaque question
-    foreach($questions as $q){
-        $stmtRep = $pdo->prepare("SELECT COUNT(*) FROM reponses WHERE question_id = ?");
+    
+    // Pour chaque question, récupérer toutes ses réponses (texte et si elle est vraie)
+    foreach ($questions as &$q) {
+        $stmtRep = $pdo->prepare("SELECT text, est_vrai FROM reponses WHERE question_id = ?");
         $stmtRep->execute([$q['id']]);
-        $q['nb_reponses'] = $stmtRep->fetchColumn();
+        $q['reponses'] = $stmtRep->fetchAll(PDO::FETCH_ASSOC);
     }
 
     echo json_encode([
