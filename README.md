@@ -62,6 +62,37 @@ Permettre à l'enseignant de créer un quiz et d'y ajouter des questions sous fo
 ### Résultat attendu
 Un enseignant peut créer un quiz et construire ses questions sous forme QCM ou Vrai/Faux avec leurs réponses.
 
+## Sprint 3 : Modification + publication + faire le quiz
+
+### Objectif
+
+Permettre à l'enseignant de finaliser son quiz et permettre à un étudiant de le passer
+
+### Tâches et outils utilisés
+
+| Tâche                                                            | Outils utilisés |
+| ---------------------------------------------------------------- | --------------- |
+| Ajouter la possibilité de modifier le mot de passe du professeur |                 |
+| Ajouter le bouton Modifier                                       |                 |
+| Créer la page d'édition d'un question                            |                 |
+| Ajouter le bouton Supprimer                                      |                 |
+| Ajouter une confirmation avant suppression                       |                 |
+| Ajouter le statut Brouillon                                      |                 |
+| Ajouter le statut Publié                                         |                 |
+| Créer le bouton Publier                                          |                 |
+| Empêcher l'accès à un quiz non publié par les étudiants          |                 |
+| Créer une page publique de quiz                                  |                 |
+| Afficher les questions                                           |                 |
+| Afficher les réponses sous forme de boutons/radio buttons        |                 |
+| Permettre à l'étudiant de sélectionner ses réponses              |                 |
+| Ajouter un bouton Soumettre                                      |                 |
+| Vérifier que toutes les questions ont reçu une réponse           |                 |
+| Ajouter une page de confirmation                                 |                 |
+| Tester le parcours complet enseignant -> quiz -> étudiant        |                 |
+
+### Résultat attendu
+Un enseignant peut modifier et supprimer un quiz; aussi le publier pour que ses étudiants le consulte et répondent aux questions.
+
 
 
 
