@@ -13,7 +13,7 @@
 
 <body>
 
-    <?php require_once 'header.php'; ?>
+    
     <main>
         
         <input type="hidden" name="role" id="roleInput" value="enseignant">
