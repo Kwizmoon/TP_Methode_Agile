@@ -16,7 +16,7 @@
     <main class="main-quiz-unique" style="text-align: center;">
         <h2 style="color: #16a34a; font-size: 2rem; margin-bottom: 1rem;">🎉 Quiz soumis avec succès !</h2>
         <p style="color: #475569; margin-bottom: 2rem;">Vos réponses ont bien été enregistrées.</p>
-        <a href="" class="btn" style="display: inline-block; text-decoration: none; padding: 0.75rem 1.5rem; background-color: #2563eb; color: white; border-radius: 6px;">Retour au tableau de bord</a>
+        <a href="public_quiz.php" class="btn" style="display: inline-block; text-decoration: none; padding: 0.75rem 1.5rem; background-color: #2563eb; color: white; border-radius: 6px;">Retour au tableau de bord</a>
     </main>
 </body>
 </html>
