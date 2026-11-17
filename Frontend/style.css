@@ -131,27 +131,95 @@ button[type="submit"]:hover {
 }
 
 
-header,
-.main-header 
-{
+
+
+
+/* HEADER */
+.main-header {
     width: 100%;
     display: flex;
-    justify-content: flex-start; /* Aligne le logo/titre à gauche */
+    flex-direction: row !important;
+    justify-content: space-between;
     align-items: center;
     padding: 14px 22px;
-    border-bottom: 1px solid var(--bord, #e2e8f0);
+    border-bottom: 1px solid #e2e8f0;
     background-color: #ffffff;
-    
 }
 
-.main-header a,
-header a {
+/* Logo KWIZ */
+.main-header .logo {
     font-family: 'Varela Round', sans-serif;
-    text-decoration: none !important;
-    color: inherit;
-    font-size: xx-large;
+    text-decoration: none;
+    color: #1e293b;
+    font-size: 1.8rem;
     font-weight: bold;
+    line-height: normal;
 }
+
+
+/* Conteneur des boutons */
+.main-header .header-actions {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Profil: <a> */
+.main-header a.btn-profil {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    line-height: normal;
+    text-decoration: none !important;
+    cursor: pointer;
+    background-color: #f1f5f9;
+    color: #4a5568;
+    border: 1px solid #cbd5e1;
+}
+
+/* Déconnexion: <button> */
+.main-header button.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    line-height: normal;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #ef4444;
+    color: #ffffff;
+    border: 1px solid #ef4444;
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hover */
+.main-header a.btn-profil:hover {
+    background-color: #e2e8f0;
+}
+
+.main-header button.logout-btn:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+
+
+
+
+
+
+
 /* Conteneur principal du switch */
 .switch-role-container {
     display: flex;
@@ -235,24 +303,7 @@ header a {
     width: 100%;
 }
 
-.logout-section {
-    margin-top: 30px;
-    text-align: center;
-}
 
-.logout-btn {
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.logout-btn:hover {
-    background-color: #dc2626;
-}
 
 /* Conteneur pour lier l'input et son bouton */
 .input-wrapper {

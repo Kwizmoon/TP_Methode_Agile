@@ -46,11 +46,12 @@ try {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
 
-    // Table quiz (ID, titre, description, et référence à l'enseignant)
+    // Table quiz (ID, titre, description, statut et référence à l'enseignant)
     $pdo->exec("CREATE TABLE IF NOT EXISTS quiz (
         id INT AUTO_INCREMENT PRIMARY KEY,
         titre VARCHAR(100) NOT NULL UNIQUE,
         description TEXT NOT NULL,
+        statut ENUM('Brouillon', 'Publié') NOT NULL DEFAULT etudiant,
         user_id INT NOT NULL,
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
@@ -87,6 +88,27 @@ try {
         'mot_de_passe' => $motDePasseHache,
         'role' => 'enseignant'
     ]);
+
+
+    // Liste des étudiants à ajouter
+    $etudiants = ['Mohamed', 'Bao', 'Adam', 'Elio'];
+
+    // Préparation de la requête (INSERT IGNORE évite les erreurs si l'utilisateur existe déjà)
+    $stmt = $pdo->prepare("INSERT IGNORE INTO users (nom, mot_de_passe, role) 
+                            VALUES (:nom, :mot_de_passe, :role)");
+
+    foreach ($etudiants as $prenom) {
+    // Hachage sécurisé du mot de passe (ex: Mohamed123)
+    $motDePasseClair = $prenom . '123';
+    $motDePasseHache = password_hash($motDePasseClair, PASSWORD_DEFAULT);
+
+    // Insertion de l'étudiant
+    $stmt->execute([
+        'nom' => $prenom,
+        'mot_de_passe' => $motDePasseHache,
+        'role' => 'etudiant'
+    ]);
+}
 
 
 } catch (PDOException $e) {
