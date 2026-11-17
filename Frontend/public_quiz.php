@@ -57,7 +57,7 @@ fetch('../api/get_public_quiz.php')
                     </p>
 
                     <a href="passer_quiz.php?id=${quiz.id}">
-                        <button>
+                        <button class="btn">
                             Commencer
                         </button>
                     </a>
