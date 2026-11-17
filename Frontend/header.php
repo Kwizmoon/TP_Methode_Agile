@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="main-header">
-        <a href="Dashboard.php" class="logo">KWIZ</a>
+        <a href="<?= $_SESSION['dashboard'] ?>" class="logo">KWIZ</a>
 
         <div class="header-actions">
             <a href="profil.php" class="btn-profil">Profil</a>
