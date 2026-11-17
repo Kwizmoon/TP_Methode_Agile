@@ -50,12 +50,6 @@ require_once '../middleware/auth.php';
         <div class="dashboard-grid" id="liste-quiz"></div>
     </section>
 
-    <div class="logout-section">
-        <button class="logout-btn" onclick="deconnexion()">
-            Déconnexion
-        </button>
-    </div>
-
 </div>
 
 </body>
@@ -110,25 +104,5 @@ require_once '../middleware/auth.php';
     }
 
     chargerQuiz();
-
-    async function deconnexion(){
-
-        try {
-            const response = await fetch('../api/deconnexion.php', {
-                method : 'POST'
-            });
-
-            const result = await response.json();
-            
-
-            if(result.success){
-                window.location.href = result.redirect;
-            }
-            
-        } catch (error) {
-            console.error('Erreur réseau:', error);
-        }
-    }
-
 
 </script>
