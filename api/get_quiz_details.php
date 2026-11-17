@@ -28,7 +28,7 @@ if (!$quizId) {
 }
 
 $quizQuery = $pdo->prepare(
-    "SELECT id, titre, description
+    "SELECT id, titre, description, statut
      FROM quiz
      WHERE id = :id"
 );

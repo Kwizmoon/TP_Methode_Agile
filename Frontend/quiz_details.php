@@ -94,6 +94,9 @@ require_once '../middleware/auth.php';
                     <div class="welcome-card">
                         <h1>${quiz.titre}</h1>
                         <p>${quiz.description}</p>
+                        ${quiz.statut === 'Publié'
+                            ? '<p>✅ Quiz publié</p>'
+                            : '<button class="btn" onclick="publierQuiz()">Publier</button>'}
                     </div>
                 `;
 
@@ -130,6 +133,8 @@ require_once '../middleware/auth.php';
 
                     html += `
                             </ul>
+                            <button class="btn" onclick="window.location.href='modifier_question.php?id=${question.id}'">Modifier</button>
+                            <button class="btn" onclick="supprimerQuestion(${question.id})">Supprimer</button>
                         </div>
                     `;
 
@@ -164,6 +169,52 @@ require_once '../middleware/auth.php';
     }
 
 
+
+    // Publier le quiz (statut -> Publié)
+    async function publierQuiz() {
+        try {
+            const response = await fetch('../api/publier_quiz.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ quiz_id: quizId })
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                location.reload();
+            } else {
+                alert(result.message || 'Erreur lors de la publication.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Impossible de communiquer avec le serveur.');
+        }
+    }
+
+    // Supprimer une question apres confirmation
+    async function supprimerQuestion(questionId) {
+        if (!confirm('Voulez-vous vraiment supprimer cette question ?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch('../api/supprimer_question.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question_id: questionId })
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                location.reload();
+            } else {
+                alert(result.message || 'Erreur lors de la suppression.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Impossible de communiquer avec le serveur.');
+        }
+    }
 
 </script>
 
