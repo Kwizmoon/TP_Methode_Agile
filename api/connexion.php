@@ -64,11 +64,11 @@ if(empty($erreurs)){
     $_SESSION['nom'] = $user['nom'];
     $_SESSION['role'] = $user['role'];
     $_SESSION['authenticated'] = true;
-
+    $_SESSION['dashboard'] = ($_SESSION['role'] == 'enseignant') ? "Dashboard.php" : "public_quiz.php";
 
     echo json_encode([
         "success" => true,
-        "redirect" => "Dashboard.php"
+        "redirect" => $_SESSION['dashboard']
     ]);
     exit();
 
