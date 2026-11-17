@@ -9,9 +9,7 @@
 
 <body>
 
-<header class="main-header">
-    <a href="accueil.php">Kwizmoon</a>
-</header>
+<?php include 'header.php'; ?>
 
 <div class="dashboard">
 
@@ -58,7 +56,7 @@ fetch('../api/get_public_quiz.php')
                         question(s)
                     </p>
 
-                    <a href="quiz_details.php?id=${quiz.id}">
+                    <a href="passer_quiz.php?id=${quiz.id}">
                         <button>
                             Commencer
                         </button>
