@@ -2,10 +2,8 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['nom'], $_SESSION['role'])) {
-    header('Location: index.php');
-    exit;
-}
+require_once '../middleware/auth.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -156,7 +154,7 @@ if (!isset($_SESSION['nom'], $_SESSION['role'])) {
                 if (reponse.status === 401) {
                     message.textContent = 'Votre session a expiré. Redirection...';
                     setTimeout(() => {
-                        window.location.href = 'index.php';
+                        window.location.href = <?= $_SESSION['dashboard'] ?>;
                     }, 2000);
                 }
 
