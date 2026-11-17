@@ -51,7 +51,7 @@ try {
         id INT AUTO_INCREMENT PRIMARY KEY,
         titre VARCHAR(100) NOT NULL UNIQUE,
         description TEXT NOT NULL,
-        statut ENUM('Brouillon', 'Publié') NOT NULL DEFAULT etudiant,
+        statut ENUM('Brouillon', 'Publié') NOT NULL DEFAULT Brouillon,
         user_id INT NOT NULL,
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
